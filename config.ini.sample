@@ -1,0 +1,43 @@
+; This is a sample of config.ini file.
+
+; --------------------------------------------------------------------
+; The config.ini file must have 3 sections: Access, Client, User.
+; --------------------------------------------------------------------
+
+; In each section some fields are optional. You can delete them.
+
+; In the Access section will contain authentication information as
+; the `api_id` number and the `api_hash` string.
+
+; API info
+[Access]
+; `session` is the name of the session file.
+session = session
+; `id` is the `api_id` value.
+id = 0
+; `hash` is the `api_hash` string.
+hash = your_api_hash_here
+
+
+; In the Client section will contain information about
+; the Telegram client. This is optional.
+
+; Client settings
+[Client]
+; The `timeout`, a low value can cause disconnection.
+timeout = 7000
+; A customized device model.
+device_model = TasksProcessor
+; `lang_code` without explanations.
+lang_code = en_GB
+
+
+; In the User section will contain information about the account,
+; the phone number to login and an optional password.
+
+; User information
+[User]
+; The `phone` number must have the country code.
+phone = 0
+; This field is optional, if you do not need it you can delete it.
+password = password_here_or_delete_this_line
