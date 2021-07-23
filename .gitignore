@@ -1,7 +1,11 @@
+.vscode
 env/
 *.egg-info/
 
 *.py[cod]
 __pycache__
+
+lab
+impossible
 
 docs/_build/
