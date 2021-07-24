@@ -1,11 +1,12 @@
 .vscode
 env/
+.tox/
 *.egg-info/
 
 *.py[cod]
 __pycache__
 
+docs/build/
+
 lab
 impossible
-
-docs/build/
