@@ -8,4 +8,4 @@ __pycache__
 lab
 impossible
 
-docs/_build/
+docs/source/_build/
