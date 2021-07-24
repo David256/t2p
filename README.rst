@@ -1,8 +1,6 @@
 Telegram Tasks Processor
 ========================
 
-:main-content
-
 A.K.A **t2p**.
 
 Tool to execute tasks through Telegram userbot.
