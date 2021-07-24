@@ -15,6 +15,14 @@ class MessagesDumper(Tasker):
         self.data = {}
         self.last_mid = 1
     
+    async def _get_messages(self, client):
+        result = await client.get_messages(
+            entity=self.args.target,
+            offset_id=self.last_mid,
+            reverse=True
+        )
+        return result
+    
     def preload(self) -> None:
         if not self.args.datafilename:
             logger.critical('No file given to write data: datafilename')
@@ -49,11 +57,7 @@ class MessagesDumper(Tasker):
     
     async def start(self, client: telethon.TelegramClient) -> None:
         logger.debug(f'Target is {self.args.target}')
-        result = await client.get_messages(
-            entity=self.args.target,
-            offset_id=self.last_mid,
-            reverse=True
-        )
+        result = await self._get_messages(client)
 
         # Show info
         logger.info(f'Total messages: %d.', result.total)
