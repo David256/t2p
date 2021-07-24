@@ -14,16 +14,20 @@ from .logger import logger
 from .tasks.task import Tasker, TaskerError
 from .tasks.dump_messages import MessagesDumper
 
+
 class TasksProcessor:
     """
     Processes tasks over a Telegram session.
 
-    This class defines and starts a Telegram client taking information of parameter ``config``. Also, adds some taskers to be available. This taskers can be called using the method ``run_task``.
+    This class defines and starts a Telegram client taking information of
+    parameter ``config``. Also, adds some taskers to be available. This
+    taskers can be called using the method ``run_task``.
     """
     def __init__(self, config) -> None:
         """Initialize the TasksProcessor object.
-        
-        :param config: The configuration object to create and start the Telegram client.
+
+        :param config: The configuration object to create and start the
+        Telegram client.
         :type config: ConfigParser
         """
         self.config = config
@@ -32,7 +36,9 @@ class TasksProcessor:
         api_id = int(config['Access']['id'])
         api_hash = config['Access']['hash']
         timeout = int(config['Client'].get('timeout', 7000))
-        device_model = config['Client'].get('device_model', 'Telegram Tasks Processor')
+        device_model = config['Client'].get(
+            'device_model',
+            'Telegram Tasks Processor')
         lang_code = config['Client'].get('lang_code', locale.getlocale()[0])
         logger.debug('Set timeout to %d', timeout)
         logger.debug('Set device model to "%s"', device_model)
@@ -61,11 +67,13 @@ class TasksProcessor:
         ]
 
         logger.info('%d taskers loaded', len(self.taskers))
-    
+
     def run_task(self, task_name: str, cli_args: object) -> None:
         """Finds a tasker what can do a task.
 
-        This method filters the taskers by matching with the parameter ``task_name``, and start processing in four phases:
+        This method filters the taskers by matching with the parameter
+        ``task_name``, and start processing in four phases:
+
         #. Define the argument passed via CLI argument.
         #. Call the method preload.
         #. Call the method start and await Coroutine ending.
@@ -78,7 +86,7 @@ class TasksProcessor:
         """
         logger.debug('find task by task name "%s"', task_name)
         # Find a tasker
-        tasker:Tasker = None
+        tasker: Tasker = None
         for _tasker in self.taskers:
             if _tasker.name == task_name:
                 tasker = _tasker

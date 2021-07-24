@@ -1,5 +1,7 @@
 """
-This module defines the object ``logger`` and its formatter according of the environment variable ``T2P_ENV``. For *development* the message logs will be more detailed, but for *production* this will be tiny.
+This module defines the object ``logger`` and its formatter according of the
+environment variable ``T2P_ENV``. For *development* the message logs will be
+more detailed, but for *production* this will be tiny.
 """
 
 import logging
@@ -12,7 +14,8 @@ logger = logging.getLogger('T2P')
 
 if T2P_ENV == 'development':
     formatter = logging.Formatter(
-        '%(asctime)s (%(filename)s:%(lineno)d %(threadName)s) [%(module)s.%(funcName)s] %(levelname)s - %(name)s: "%(message)s"'
+        '%(asctime)s (%(filename)s:%(lineno)d %(threadName)s) ' +
+        '[%(module)s.%(funcName)s] %(levelname)s - %(name)s: "%(message)s"'
     )
     level = logging.DEBUG
 else:
