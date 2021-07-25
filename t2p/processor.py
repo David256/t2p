@@ -31,18 +31,35 @@ class TasksProcessor:
         :type config: ConfigParser
         """
         self.config = config
+        self.client = None
+        self._create_client()
+
+        # Available task
+        self.taskers = [
+            MessagesDumper()
+        ]
+
+        logger.info('%d taskers loaded', len(self.taskers))
+
+    def _create_client(self):
         # Prepare parameters
-        session = config['Access']['session']
-        api_id = int(config['Access']['id'])
-        api_hash = config['Access']['hash']
-        timeout = int(config['Client'].get('timeout', 7000))
-        device_model = config['Client'].get(
+        session = self.config['Access']['session']
+        api_id = int(self.config['Access']['id'])
+        api_hash = self.config['Access']['hash']
+        timeout = int(self.config['Client'].get('timeout', 7000))
+        device_model = self.config['Client'].get(
             'device_model',
-            'Telegram Tasks Processor')
-        lang_code = config['Client'].get('lang_code', locale.getlocale()[0])
+            'Telegram Tasks Processor'
+        )
+        lang_code = self.config['Client'].get(
+            'lang_code',
+            locale.getlocale()[0]
+        )
+
         logger.debug('Set timeout to %d', timeout)
         logger.debug('Set device model to "%s"', device_model)
         logger.debug('Set lang code to %s', lang_code)
+
         # Create the Telegram client
         self.client = telethon.TelegramClient(
             session=session,
@@ -57,16 +74,11 @@ class TasksProcessor:
 
         # Start the client
         self.client.start(
-            phone=config['User']['phone'],
-            password=config['User'].get('password')
+            phone=self.config['User']['phone'],
+            password=self.config['User'].get('password')
         )
 
-        # Available task
-        self.taskers = [
-            MessagesDumper()
-        ]
-
-        logger.info('%d taskers loaded', len(self.taskers))
+        logger.info('Telegram client created')
 
     def run_task(self, task_name: str, cli_args: object) -> None:
         """Finds a tasker what can do a task.
