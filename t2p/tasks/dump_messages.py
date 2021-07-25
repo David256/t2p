@@ -16,7 +16,7 @@ class MessagesDumper(Tasker):
         self.data = {}
         self.last_mid = 1
 
-    async def _get_messages(self, client):
+    async def _get_messages(self, client: telethon.TelegramClient):
         result = await client.get_messages(
             entity=self.args.target,
             offset_id=self.last_mid,
@@ -25,11 +25,16 @@ class MessagesDumper(Tasker):
         return result
 
     def preload(self) -> None:
-        if not self.args.datafilename:
+        if not self.args:
+            logger.critical('The `args` is not redefined')
+            raise TaskerError('Not defined arguments')
+
+        if not hasattr(self.args, 'datafilename') \
+                or not self.args.datafilename:
             logger.critical('No file given to write data: datafilename')
             raise TaskerError('Missing argument "datafilename"')
 
-        if not self.args.target:
+        if not hasattr(self.args, 'target') or not self.args.target:
             logger.critical('No target given')
             raise TaskerError('Missing argument "target"')
 
