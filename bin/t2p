@@ -9,7 +9,8 @@ import t2p
 
 logger = t2p.logger.getChild('CLI')
 
-argparser = argparse.ArgumentParser(description='Telegram Dumper to chats or channels')
+argparser = argparse.ArgumentParser(
+    description='Telegram Dumper to chats or channels')
 
 # Set general arguments
 argparser.add_argument(
@@ -43,7 +44,8 @@ argparser_dump_subparser = argparser_dump.add_subparsers(
 )
 
 # CLI: t2p dump messages
-argparser_dump_subparser_messages = argparser_dump_subparser.add_parser('messages')
+argparser_dump_subparser_messages = argparser_dump_subparser.add_parser(
+    'messages')
 argparser_dump_subparser_messages.add_argument(
     '-d',
     '--data',
