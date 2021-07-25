@@ -46,15 +46,12 @@ class MessagesDumper(Tasker):
             logger.debug(f'Value of `last_mid` is {self.last_mid}')
 
         # Check JSON content
-        if 'users' not in self.data:
-            self.data['users'] = {}
         if 'messages' not in self.data:
             self.data['messages'] = {}
 
         # Show stats in data
-        logger.info('There are %d users saves.', len(self.data['users']))
         logger.info(
-            'There are %d messages saves.', len(self.data['messages']))
+            'There are %d messages saved.', len(self.data['messages']))
         logger.info('Last mID is %d.', self.last_mid)
 
     async def start(self, client: telethon.TelegramClient) -> None:
