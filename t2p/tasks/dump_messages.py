@@ -25,6 +25,19 @@ class MessagesDumper(Tasker):
         return result
 
     def preload(self) -> None:
+        """Checks the values needed.
+
+        To the task of dumping messages it is needed the filename to save the
+        gotten data. This value is in `datafilename`. Also, the value `target`
+        sets the target peer, channel ID, group ID or username.
+
+        If a data file exists, then it is loaded. If the value of `last_mid`
+        (that means last message ID) is set, then the messages will be
+        requested from last message read.
+
+        Raises:
+            TaskerError - If data is missing.
+        """
         if not self.args:
             logger.critical('The `args` is not redefined')
             raise TaskerError('Not defined arguments')
@@ -60,6 +73,19 @@ class MessagesDumper(Tasker):
         logger.info('Last mID is %d.', self.last_mid)
 
     async def start(self, client: telethon.TelegramClient) -> None:
+        """Requests messages from last message read or from the first message.
+
+        The data to save will be:
+
+        - Message ID.
+        - Message text.
+        - Author name.
+        - Type of author. This can be `anonymous`, `user`, or `channel`.
+
+        Args:
+            client (:telethon:`telethon.TelegramClient`):
+                The Telegram client object.
+        """
         logger.debug(f'Target is {self.args.target}')
         result = await self._get_messages(client)
 
@@ -107,6 +133,7 @@ class MessagesDumper(Tasker):
                     }
 
     def end(self) -> None:
+        """Save dumped data to file."""
         with open(self.args.datafilename, 'w') as file:
             json.dump(self.data, file, indent=4)
         logger.info('Data saved in %s', self.args.datafilename)

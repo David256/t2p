@@ -15,7 +15,7 @@ from .tasks.task import Tasker, TaskerError
 from .tasks.dump_messages import MessagesDumper
 
 
-class TasksProcessor:
+class TasksProcessor(object):
     """
     Processes tasks over a Telegram session.
 
@@ -26,9 +26,10 @@ class TasksProcessor:
     def __init__(self, config) -> None:
         """Initialize the TasksProcessor object.
 
-        :param config: The configuration object to create and start the
-        Telegram client.
-        :type config: ConfigParser
+        Args:
+            config (configparser.ConfigParser):
+                The configuration object to create and start the
+                Telegram client.
         """
         self.config = config
         self.client = None
@@ -91,10 +92,9 @@ class TasksProcessor:
         #. Call the method start and await Coroutine ending.
         #. Call the method end.
 
-        :param task_name: The name of the task.
-        :type task_name: str
-        :param cli_args: The CLI arguments.
-        :type cli_args: Namespace
+        Args:
+            task_name (str): The name of the task.
+            cli_args (argparse.Namespace): The CLI arguments.
         """
         logger.debug('find task by task name "%s"', task_name)
         # Find a tasker
