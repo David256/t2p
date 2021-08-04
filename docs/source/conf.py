@@ -12,6 +12,7 @@
 #
 import os
 import sys
+sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, '../t2p')
 
 
@@ -31,6 +32,9 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
+    'plugin_search_in_telethon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -71,3 +75,7 @@ todo_include_todos = True
 
 # More sphinx config
 autoclass_content = 'both'
+
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None)
+}
