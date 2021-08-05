@@ -5,6 +5,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.2.0] - 2021-08-04
+--------------------
+Added
+~~~~~
+- New task to send voice notes from file.
+
+Changed
+~~~~~~~
+- Update README file. Now shows available tasks.
+- The documentation was updated and a new plugin was added. There are needed links to references outside this documentation.
+
 [0.1.2] - 2021-07-25
 --------------------
 Added
