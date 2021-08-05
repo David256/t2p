@@ -13,6 +13,7 @@ from .version import __version__
 from .logger import logger
 from .tasks.task import Tasker, TaskerError
 from .tasks.dump_messages import MessagesDumper
+from .tasks.send_voice_notes import VoiceNotesSender
 
 
 class TasksProcessor(object):
@@ -37,7 +38,8 @@ class TasksProcessor(object):
 
         # Available task
         self.taskers = [
-            MessagesDumper()
+            MessagesDumper(),
+            VoiceNotesSender(),
         ]
 
         logger.info('%d taskers loaded', len(self.taskers))

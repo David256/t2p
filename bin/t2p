@@ -61,6 +61,32 @@ argparser_dump_subparser_messages.add_argument(
     help='set the chat/channel target to dumping.'
 )
 
+# CLI: t2p send
+argparser_send = subparsers.add_parser('send')
+argparser_send_subparser = argparser_send.add_subparsers(
+    description='These are the available subcommands.',
+    dest='subcommand',
+    help='available subsubcommands'
+)
+
+# CLI: t2p send voicenote
+argparser_send_subparser_voicenotes = argparser_send_subparser.add_parser(
+    'voicenotes')
+argparser_send_subparser_voicenotes.add_argument(
+    '-f',
+    '--filename',
+    required=True,
+    dest='filename',
+    help='set the filename to send as voice note'
+)
+argparser_send_subparser_voicenotes.add_argument(
+    '-t',
+    '--target',
+    required=True,
+    dest='target',
+    help='set the chat/channel target to send.'
+)
+
 cli_args = argparser.parse_args()
 config = configparser.ConfigParser()
 
