@@ -29,3 +29,9 @@ Quickstart
  t2p
  # or type this for help
  t2p --help
+
+Available tasks
+---------------
+
+- Dumping messages from a chat.
+- Send voice notes from audio file.
