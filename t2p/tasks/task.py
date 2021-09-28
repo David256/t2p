@@ -1,11 +1,14 @@
+from abc import ABC, abstractmethod
+
 import telethon
+import argparse
 
 
 class TaskerError(Exception):
     pass
 
 
-class Tasker(object):
+class Tasker(ABC):
     def __init__(self, task_name: str) -> None:
         """Constructs a Tasker.
 
@@ -13,8 +16,9 @@ class Tasker(object):
             task_name (str): The name of the task.
         """
         self.name = task_name
-        self.args = None
+        self.args = argparse.Namespace()
 
+    @abstractmethod
     def preload(self) -> None:
         """Method called before of starting the doing of the task.
 
@@ -25,6 +29,7 @@ class Tasker(object):
         """
         pass
 
+    @abstractmethod
     async def start(self, client: telethon.TelegramClient) -> None:
         """Start the task.
 
@@ -34,6 +39,7 @@ class Tasker(object):
         """
         pass
 
+    @abstractmethod
     def end(self) -> None:
         """Does the finishing works."""
         pass

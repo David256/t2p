@@ -3,9 +3,9 @@ import json
 
 import telethon
 
-from .task import Tasker, TaskerError
+from t2p.tasks.task import Tasker, TaskerError
 
-from ..logger import logger
+from t2p.logger import logger
 
 logger = logger.getChild('dump_messages')
 
@@ -13,7 +13,7 @@ logger = logger.getChild('dump_messages')
 class MessagesDumper(Tasker):
     def __init__(self) -> None:
         Tasker.__init__(self, 'dump_messages')
-        self.data = {}
+        self.data: dict = {}
         self.last_mid = 1
 
     async def _get_messages(self, client: telethon.TelegramClient):

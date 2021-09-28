@@ -4,6 +4,12 @@ init:
 test:
 	pytest
 
+lint:
+	flake8 t2p
+
+typing:
+	mypy
+
 doc:
 	make -C docs/ html
 
@@ -16,4 +22,4 @@ resetdoc:
 serve:
 	python3 -m http.server -d docs/build/html
 
-.PHONY: init test doc dev resetdoc serve
+.PHONY: init test doc dev resetdoc serve lint

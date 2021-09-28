@@ -2,9 +2,9 @@ import os
 import re
 
 import telethon
-from .task import Tasker, TaskerError
+from t2p.tasks.task import Tasker, TaskerError
 
-from ..logger import logger
+from t2p.logger import logger
 
 logger = logger.getChild('send_voicenotes')
 
@@ -15,7 +15,7 @@ class VoiceNotesSender(Tasker):
 
     def preload(self) -> None:
         """Checks the values needed.
-        
+
         To send voice notes is needed the value `target` that is the chat where
         the voice note will be sent. The value `filename` is needed too.
 
@@ -41,7 +41,7 @@ class VoiceNotesSender(Tasker):
 
     async def start(self, client: telethon.TelegramClient) -> None:
         """Send the voice note.
-        
+
         Args:
             client (:telethon:`telethon.TelegramClient`):
                 The Telegram client object.

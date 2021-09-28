@@ -19,6 +19,15 @@ class FakeTask(Tasker):
     def __init__(self, task_name: str) -> None:
         super().__init__(task_name)
 
+    async def start(self, client) -> None:
+        return await super().start(client)
+
+    def preload(self) -> None:
+        return super().preload()
+
+    def end(self) -> None:
+        return super().end()
+
 
 def fake_create_client(self):
     self.client = FakeObject(loop=asyncio.get_event_loop())

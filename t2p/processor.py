@@ -6,14 +6,14 @@ This module defines the class ``TasksProcessor`` which will process tasks.
 """
 
 import locale
-
+from typing import Any, Type, List, cast
 import telethon
 
 from .version import __version__
 from .logger import logger
-from .tasks.task import Tasker, TaskerError
-from .tasks.dump_messages import MessagesDumper
-from .tasks.send_voice_notes import VoiceNotesSender
+from t2p.tasks.task import Tasker, TaskerError
+from t2p.tasks.dump_messages import MessagesDumper
+from t2p.tasks.send_voice_notes import VoiceNotesSender
 
 
 class TasksProcessor(object):
@@ -33,11 +33,13 @@ class TasksProcessor(object):
                 Telegram client.
         """
         self.config = config
-        self.client = None
+        self.client = cast(
+            'telethon.TelegramClient',
+            None)
         self._create_client()
 
         # Available task
-        self.taskers = [
+        self.taskers: List[Type[Any]] = [
             MessagesDumper(),
             VoiceNotesSender(),
         ]
@@ -100,7 +102,7 @@ class TasksProcessor(object):
         """
         logger.debug('find task by task name "%s"', task_name)
         # Find a tasker
-        tasker: Tasker = None
+        tasker = cast(Tasker, None)
         for _tasker in self.taskers:
             if _tasker.name == task_name:
                 tasker = _tasker
@@ -111,7 +113,7 @@ class TasksProcessor(object):
             return
 
         # Update the cli arguments
-        tasker.args = cli_args
+        tasker.args = cli_args  # type: ignore
 
         try:
             # Preload
