@@ -5,6 +5,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.3.0] - 2021-09-28
+--------------------
+Added
+~~~~~
+- New feature to search nearby users and chats and print in the screen.
+
+Fixed
+~~~~~
+- Fix in test for processor.
+
 [0.2.1] - 2021-09-27
 --------------------
 Changed
