@@ -5,6 +5,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.2.1] - 2021-09-27
+--------------------
+Changed
+~~~~~~~
+- The args parser was moved to each task class.
+- The code in the binary `t2p` has some changes in the structure. No new features.
+
+Fixed
+~~~~~
+- Fixes around the typing style and the typing hints.
+
 [0.2.0] - 2021-08-04
 --------------------
 Added
