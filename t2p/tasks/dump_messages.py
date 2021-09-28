@@ -1,5 +1,6 @@
 import os
 import json
+import argparse
 
 import telethon
 
@@ -11,10 +12,30 @@ logger = logger.getChild('dump_messages')
 
 
 class MessagesDumper(Tasker):
+    command = 'messages'
+
     def __init__(self) -> None:
         Tasker.__init__(self, 'dump_messages')
         self.data: dict = {}
         self.last_mid = 1
+
+    @classmethod
+    def prepare(cls, parser: argparse._SubParsersAction):
+        parser_messages = parser.add_parser(cls.command)
+        parser_messages.add_argument(
+            '-d',
+            '--data',
+            required=True,
+            dest='datafilename',
+            help='set the file to save dumped data.'
+        )
+        parser_messages.add_argument(
+            '-t',
+            '--target',
+            required=True,
+            dest='target',
+            help='set the chat/channel target to dumping.'
+        )
 
     async def _get_messages(self, client: telethon.TelegramClient):
         result = await client.get_messages(

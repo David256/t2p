@@ -18,6 +18,11 @@ class Tasker(ABC):
         self.name = task_name
         self.args = argparse.Namespace()
 
+    @classmethod
+    @abstractmethod
+    def prepare(cls, parser: argparse._SubParsersAction):
+        pass
+
     @abstractmethod
     def preload(self) -> None:
         """Method called before of starting the doing of the task.

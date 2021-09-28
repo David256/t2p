@@ -3,6 +3,7 @@
 import configparser
 import argparse
 import os
+from typing import Type
 
 # Import the module
 import t2p
@@ -13,7 +14,7 @@ def get_logger():
     return logger
 
 
-def get_args():
+def get_args(cls: Type[t2p.TasksProcessor]):
     argparser = argparse.ArgumentParser(
         description='Telegram Dumper to chats or channels')
 
@@ -40,57 +41,15 @@ def get_args():
         help='available commands'
     )
 
-    # CLI: t2p dump
-    argparser_dump = subparsers.add_parser('dump')
-    argparser_dump_subparser = argparser_dump.add_subparsers(
-        description='These are the available subcommands.',
-        dest='subcommand',
-        help='available subsubcommands'
-    )
-
-    # CLI: t2p dump messages
-    argparser_dump_subparser_messages = argparser_dump_subparser.add_parser(
-        'messages')
-    argparser_dump_subparser_messages.add_argument(
-        '-d',
-        '--data',
-        required=True,
-        dest='datafilename',
-        help='set the file to save dumped data.'
-    )
-    argparser_dump_subparser_messages.add_argument(
-        '-t',
-        '--target',
-        required=True,
-        dest='target',
-        help='set the chat/channel target to dumping.'
-    )
-
-    # CLI: t2p send
-    argparser_send = subparsers.add_parser('send')
-    argparser_send_subparser = argparser_send.add_subparsers(
-        description='These are the available subcommands.',
-        dest='subcommand',
-        help='available subsubcommands'
-    )
-
-    # CLI: t2p send voicenote
-    argparser_send_subparser_voicenotes = argparser_send_subparser.add_parser(
-        'voicenotes')
-    argparser_send_subparser_voicenotes.add_argument(
-        '-f',
-        '--filename',
-        required=True,
-        dest='filename',
-        help='set the filename to send as voice note'
-    )
-    argparser_send_subparser_voicenotes.add_argument(
-        '-t',
-        '--target',
-        required=True,
-        dest='target',
-        help='set the chat/channel target to send.'
-    )
+    for group, classes in cls.available_taskers.items():
+        argparser_group = subparsers.add_parser(group)
+        argparser_subparser = argparser_group.add_subparsers(
+            description=f'These are the available subcommands for "{group}".',
+            dest='subcommand',
+            help='available subsubcommands'
+        )
+        for _cls in classes:
+            _cls.prepare(argparser_subparser)
 
     cli_args = argparser.parse_args()
     return cli_args
@@ -98,7 +57,7 @@ def get_args():
 
 def main():
     logger = get_logger()
-    cli_args = get_args()
+    cli_args = get_args(t2p.TasksProcessor)
 
     # Get the configuration
     config = configparser.ConfigParser()

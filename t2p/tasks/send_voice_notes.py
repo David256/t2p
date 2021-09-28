@@ -1,5 +1,6 @@
 import os
 import re
+import argparse
 
 import telethon
 from t2p.tasks.task import Tasker, TaskerError
@@ -10,8 +11,28 @@ logger = logger.getChild('send_voicenotes')
 
 
 class VoiceNotesSender(Tasker):
+    command = 'voicenotes'
+
     def __init__(self) -> None:
         Tasker.__init__(self, 'send_voicenotes')
+
+    @classmethod
+    def prepare(cls, parser: argparse._SubParsersAction):
+        argparser_subparser = parser.add_parser(cls.command)
+        argparser_subparser.add_argument(
+            '-f',
+            '--filename',
+            required=True,
+            dest='filename',
+            help='set the filename to send as voice note'
+        )
+        argparser_subparser.add_argument(
+            '-t',
+            '--target',
+            required=True,
+            dest='target',
+            help='set the chat/channel target to send.'
+        )
 
     def preload(self) -> None:
         """Checks the values needed.

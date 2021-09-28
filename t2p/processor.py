@@ -6,7 +6,7 @@ This module defines the class ``TasksProcessor`` which will process tasks.
 """
 
 import locale
-from typing import Any, Type, List, cast
+from typing import Any, Dict, Type, List, cast
 import telethon
 
 from .version import __version__
@@ -14,6 +14,7 @@ from .logger import logger
 from t2p.tasks.task import Tasker, TaskerError
 from t2p.tasks.dump_messages import MessagesDumper
 from t2p.tasks.send_voice_notes import VoiceNotesSender
+from t2p.tasks.search_nearby_ones import NearbyOnesSeacher
 
 
 class TasksProcessor(object):
@@ -24,6 +25,18 @@ class TasksProcessor(object):
     parameter ``config``. Also, adds some taskers to be available. This
     taskers can be called using the method ``run_task``.
     """
+    available_taskers: Dict[str, List[Type[Any]]] = {
+        'dump': [
+            MessagesDumper,
+        ],
+        'send': [
+            VoiceNotesSender,
+        ],
+        'search': [
+            NearbyOnesSeacher,
+        ],
+    }
+
     def __init__(self, config) -> None:
         """Initialize the TasksProcessor object.
 
@@ -33,16 +46,14 @@ class TasksProcessor(object):
                 Telegram client.
         """
         self.config = config
-        self.client = cast(
-            'telethon.TelegramClient',
-            None)
+        self.client: 'telethon.TelegramClient'
         self._create_client()
 
         # Available task
-        self.taskers: List[Type[Any]] = [
-            MessagesDumper(),
-            VoiceNotesSender(),
-        ]
+        self.taskers = []
+        for classes in self.available_taskers.values():
+            for cls in classes:
+                self.taskers.append(cls())
 
         logger.info('%d taskers loaded', len(self.taskers))
 
