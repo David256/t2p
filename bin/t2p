@@ -7,103 +7,121 @@ import os
 # Import the module
 import t2p
 
-logger = t2p.logger.getChild('CLI')
 
-argparser = argparse.ArgumentParser(
-    description='Telegram Dumper to chats or channels')
+def get_logger():
+    logger = t2p.logger.getChild('CLI')
+    return logger
 
-# Set general arguments
-argparser.add_argument(
-    '-c',
-    '--config',
-    required=True,
-    dest='configpath',
-    help='Set the path to the config file.'
-)
-argparser.add_argument(
-    '-v',
-    '--verbose',
-    action='store_true',
-    help='Set mode verbose.'
-)
 
-# Sub-commands
+def get_args():
+    argparser = argparse.ArgumentParser(
+        description='Telegram Dumper to chats or channels')
 
-subparsers = argparser.add_subparsers(
-    description='These are the available commands.',
-    dest='command',
-    help='available commands'
-)
+    # Set general arguments
+    argparser.add_argument(
+        '-c',
+        '--config',
+        required=True,
+        dest='configpath',
+        help='Set the path to the config file.'
+    )
+    argparser.add_argument(
+        '-v',
+        '--verbose',
+        action='store_true',
+        help='Set mode verbose.'
+    )
 
-# CLI: t2p dump
-argparser_dump = subparsers.add_parser('dump')
-argparser_dump_subparser = argparser_dump.add_subparsers(
-    description='These are the available subcommands.',
-    dest='subcommand',
-    help='available subsubcommands'
-)
+    # Sub-commands
 
-# CLI: t2p dump messages
-argparser_dump_subparser_messages = argparser_dump_subparser.add_parser(
-    'messages')
-argparser_dump_subparser_messages.add_argument(
-    '-d',
-    '--data',
-    required=True,
-    dest='datafilename',
-    help='set the file to save dumped data.'
-)
-argparser_dump_subparser_messages.add_argument(
-    '-t',
-    '--target',
-    required=True,
-    dest='target',
-    help='set the chat/channel target to dumping.'
-)
+    subparsers = argparser.add_subparsers(
+        description='These are the available commands.',
+        dest='command',
+        help='available commands'
+    )
 
-# CLI: t2p send
-argparser_send = subparsers.add_parser('send')
-argparser_send_subparser = argparser_send.add_subparsers(
-    description='These are the available subcommands.',
-    dest='subcommand',
-    help='available subsubcommands'
-)
+    # CLI: t2p dump
+    argparser_dump = subparsers.add_parser('dump')
+    argparser_dump_subparser = argparser_dump.add_subparsers(
+        description='These are the available subcommands.',
+        dest='subcommand',
+        help='available subsubcommands'
+    )
 
-# CLI: t2p send voicenote
-argparser_send_subparser_voicenotes = argparser_send_subparser.add_parser(
-    'voicenotes')
-argparser_send_subparser_voicenotes.add_argument(
-    '-f',
-    '--filename',
-    required=True,
-    dest='filename',
-    help='set the filename to send as voice note'
-)
-argparser_send_subparser_voicenotes.add_argument(
-    '-t',
-    '--target',
-    required=True,
-    dest='target',
-    help='set the chat/channel target to send.'
-)
+    # CLI: t2p dump messages
+    argparser_dump_subparser_messages = argparser_dump_subparser.add_parser(
+        'messages')
+    argparser_dump_subparser_messages.add_argument(
+        '-d',
+        '--data',
+        required=True,
+        dest='datafilename',
+        help='set the file to save dumped data.'
+    )
+    argparser_dump_subparser_messages.add_argument(
+        '-t',
+        '--target',
+        required=True,
+        dest='target',
+        help='set the chat/channel target to dumping.'
+    )
 
-cli_args = argparser.parse_args()
-config = configparser.ConfigParser()
+    # CLI: t2p send
+    argparser_send = subparsers.add_parser('send')
+    argparser_send_subparser = argparser_send.add_subparsers(
+        description='These are the available subcommands.',
+        dest='subcommand',
+        help='available subsubcommands'
+    )
 
-# Read the INI file
-if not os.path.exists(cli_args.configpath):
-    logger.critical('The config file %s does not exist', cli_args.configpath)
-    exit(-1)
-else:
-    config.read(cli_args.configpath)
+    # CLI: t2p send voicenote
+    argparser_send_subparser_voicenotes = argparser_send_subparser.add_parser(
+        'voicenotes')
+    argparser_send_subparser_voicenotes.add_argument(
+        '-f',
+        '--filename',
+        required=True,
+        dest='filename',
+        help='set the filename to send as voice note'
+    )
+    argparser_send_subparser_voicenotes.add_argument(
+        '-t',
+        '--target',
+        required=True,
+        dest='target',
+        help='set the chat/channel target to send.'
+    )
 
-logger.debug(cli_args)
-logger.debug(cli_args.command)
+    cli_args = argparser.parse_args()
+    return cli_args
 
-# Create the tasks processor
-tp = t2p.TasksProcessor(config)
 
-# Prepare the task name and run it
-task_name = f'{cli_args.command}_{cli_args.subcommand}'
-logger.info('Run task "%s"', task_name)
-tp.run_task(task_name, cli_args)
+def main():
+    logger = get_logger()
+    cli_args = get_args()
+
+    # Get the configuration
+    config = configparser.ConfigParser()
+
+    # Read the INI file
+    if not os.path.exists(cli_args.configpath):
+        logger.critical(
+            'The config file %s does not exist', cli_args.configpath)
+        exit(-1)
+    else:
+        config.read(cli_args.configpath)
+
+    logger.debug(cli_args)
+    logger.debug(cli_args.command)
+
+    # Create the tasks processor
+    tp = t2p.TasksProcessor(config)
+
+    # Prepare the task name and run it
+    task_name = f'{cli_args.command}_{cli_args.subcommand}'
+    logger.info('Run task "%s"', task_name)
+    tp.run_task(task_name, cli_args)
+
+
+if __name__ == '__main__':
+    main()
