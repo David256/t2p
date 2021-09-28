@@ -19,6 +19,10 @@ class FakeTask(Tasker):
     def __init__(self, task_name: str) -> None:
         super().__init__(task_name)
 
+    @classmethod
+    def prepare(cls, parser):
+        return super().prepare(parser)
+
     async def start(self, client) -> None:
         return await super().start(client)
 
