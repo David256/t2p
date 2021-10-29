@@ -9,6 +9,17 @@ class TaskerError(Exception):
 
 
 class Tasker(ABC):
+    """
+    This is an abstract class for Tasker that must be inherited by a custom
+    tasker class. All the methods should be implemented for a proper operation.
+
+    The ``prepare`` class method allows you to add a CLI-settings to the
+    argument parser passed as argument.
+
+    When a tasker is called, the order of execution is as follows:
+
+        ``preload`` -> ``start`` -> ``end``
+    """
     def __init__(self, task_name: str) -> None:
         """Constructs a Tasker.
 
@@ -46,5 +57,5 @@ class Tasker(ABC):
 
     @abstractmethod
     def end(self) -> None:
-        """Does the finishing works."""
+        """Does the final work."""
         pass
