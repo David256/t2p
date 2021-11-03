@@ -37,8 +37,8 @@ class VoiceNotesSender(Tasker):
     def preload(self) -> None:
         """Checks the values needed.
 
-        To send voice notes is needed the value `target` that is the chat where
-        the voice note will be sent. The value `filename` is needed too.
+        To send voice notes the value `target` is needed that is the chat where
+        the voice note will be sent. The value `filename` is also required.
 
         Raises:
             TaskerError: If data is missing.

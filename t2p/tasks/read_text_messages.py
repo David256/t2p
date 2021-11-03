@@ -62,8 +62,8 @@ class TextMessage(Tasker):
     def preload(self) -> None:
         """Checks the values needed.
 
-        To read text messages any of the values `sn`, `chat_id`, `channel_id`,
-        and `user_id` must be defined.
+        To read text messages, any of the values `sn`, `chat_id`, `channel_id`,
+        or `user_id` must be defined.
 
         Raises:
             TaskerError: If data is missing.
