@@ -36,3 +36,4 @@ Available tasks
 - Dumping messages from a chat.
 - Send voice notes from audio file.
 - Search nearby users and chats.
+- Read text messages and apply simple filters.

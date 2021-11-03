@@ -5,6 +5,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+[0.4.0] - 2021-11-03
+--------------------
+Added
+~~~~~
+- New feature to read messages applying simple filters that are by chat id, channel id or user id for now.
+
+Changed
+~~~~~~~
+- Fixes in docstrings.
+- Update the documentation.
+
 [0.3.0] - 2021-09-28
 --------------------
 Added
