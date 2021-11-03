@@ -15,6 +15,7 @@ from t2p.tasks.task import Tasker, TaskerError
 from t2p.tasks.dump_messages import MessagesDumper
 from t2p.tasks.send_voice_notes import VoiceNotesSender
 from t2p.tasks.search_nearby_ones import NearbyOnesSeacher
+from t2p.tasks.read_text_messages import TextMessage
 
 
 class TasksProcessor(object):
@@ -35,6 +36,9 @@ class TasksProcessor(object):
         'search': [
             NearbyOnesSeacher,
         ],
+        'read': [
+            TextMessage,
+        ]
     }
 
     def __init__(self, config) -> None:
