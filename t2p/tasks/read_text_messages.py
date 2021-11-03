@@ -66,7 +66,7 @@ class TextMessage(Tasker):
         and `user_id` must be defined.
 
         Raises:
-            TaskerError - If data is missing.
+            TaskerError: If data is missing.
         """
         logger.debug(f'preload: {self.args}')
         if not self.args:

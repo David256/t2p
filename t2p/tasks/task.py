@@ -41,7 +41,7 @@ class Tasker(ABC):
         Generally, this method checks the dependencies and the values needed.
 
         Raises:
-            TaskerError - when missing data.
+            TaskerError: when missing data.
         """
         pass
 

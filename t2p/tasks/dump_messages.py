@@ -57,7 +57,7 @@ class MessagesDumper(Tasker):
         requested from last message read.
 
         Raises:
-            TaskerError - If data is missing.
+            TaskerError: If data is missing.
         """
         if not self.args:
             logger.critical('The `args` is not redefined')

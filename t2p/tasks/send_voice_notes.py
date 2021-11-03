@@ -41,7 +41,7 @@ class VoiceNotesSender(Tasker):
         the voice note will be sent. The value `filename` is needed too.
 
         Raises:
-            TaskerError - If data is missing.
+            TaskerError: If data is missing.
         """
         if not self.args:
             logger.critical('The `args` is not redefined')
