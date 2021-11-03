@@ -19,3 +19,27 @@ Task dump messages
    :members:
    :undoc-members:
    :show-inheritance:
+
+Send voice notes
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: t2p.tasks.send_voice_notes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Search nearby ones
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: t2p.tasks.search_nearby_ones
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Read text messages
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: t2p.tasks.read_text_messages
+   :members:
+   :undoc-members:
+   :show-inheritance:
